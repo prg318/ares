@@ -5,6 +5,11 @@
 
 static LRESULT CALLBACK VideoOpenGL32_WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
   if(msg == WM_SYSKEYDOWN && wparam == VK_F4) return false;
+  if(msg == WM_SETCURSOR)
+  {
+	  SetCursor(NULL);
+	  return TRUE;
+  }
   return DefWindowProc(hwnd, msg, wparam, lparam);
 }
 
@@ -155,8 +160,10 @@ private:
       _context = _window = CreateWindowEx(WS_EX_TOPMOST, L"VideoOpenGL32_Window", L"", WS_VISIBLE | WS_POPUP,
         _monitorX, _monitorY, _monitorWidth, _monitorHeight,
         nullptr, nullptr, GetModuleHandle(0), nullptr);
+	    SetCursor(NULL);
     } else {
       _context = (HWND)self.context;
+	    ShowCursor(true);
     }
 
     PIXELFORMATDESCRIPTOR descriptor{};
